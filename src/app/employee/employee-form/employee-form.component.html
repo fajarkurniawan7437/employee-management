@@ -1,0 +1,85 @@
+
+<div mat-dialog-title style="text-align: center">
+  <h1>Employee Form</h1>
+</div>
+<form [formGroup]="employeeFrom" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" placeholder="Ex. fajar79" formControlName="username">
+        <mat-error *ngIf="employeeFrom.get('username')?.hasError('required')">Username is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" placeholder="Ex. Fajar" formControlName="firstName">
+        <mat-error *ngIf="employeeFrom.get('firstName')?.hasError('required')">firstName is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Ex. Kurniawan" formControlName="lastName">
+        <mat-error *ngIf="employeeFrom.get('lastName')?.hasError('required')">lastName is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Ex. fajar@gmail.com" formControlName="email">
+        <mat-error *ngIf="employeeFrom.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="employeeFrom.get('email')?.hasError('email')">Invalid email format</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Birth Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthDate">
+        <mat-error *ngIf="employeeFrom.get('birthDate')?.hasError('required')">BirthDate is required</mat-error>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Salary</mat-label>
+        <input matInput placeholder="Ex. Rp.5.000.000" type="number" formControlName="basicSalary">
+        <mat-error *ngIf="employeeFrom.get('basicSalary')?.hasError('required')">Basic Salary is required</mat-error>
+        <mat-error *ngIf="employeeFrom.get('basicSalary')?.hasError('min')">Basic Salary must be greater than or equal to 0</mat-error>
+        <mat-hint>In Rp</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let val of status" [value]="val">
+            {{val}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeFrom.get('status')?.hasError('required')">Status is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Group</mat-label>
+        <mat-select formControlName="group">
+          <mat-option *ngFor="let val of group" [value]="val">
+            {{val}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="employeeFrom.get('group')?.hasError('required')">Status is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Ex. description" type="text" formControlName="description"></textarea>
+        <mat-error *ngIf="employeeFrom.get('description')?.hasError('required')">Description is required</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!employeeFrom.valid">{{data ? 'Update': 'Save'}}</button>
+  </div>
+</form>
